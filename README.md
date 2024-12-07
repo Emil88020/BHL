@@ -1,4 +1,4 @@
-echo "# **Hackathon Project - BEST Hacking League 2024**
+### **Hackathon Project - BEST Hacking League 2024**
 
 ## PISCINE EAGLES TEAM
 
@@ -27,9 +27,9 @@ The BEST Hacking League is an annual hackathon organized to foster innovation an
 
 ## **Team Members**
 
-- **[Kacper Konarzewski]**: *Leadear, Backend Developer and motivator*  
-- **[Dominika Szafran]**: *Project Manager, Backend Developer*  
-- **[AKbarali Nabiev]**: *Frontend Developer, UI/UX Designer*  
+- **Kacper Konarzewski**: *Leadear, Backend Developer and motivator*  
+- **Dominika Szafran**: *Project Manager, Backend Developer*  
+- **Akbarali Nabiev**: *Frontend Developer, UI/UX Designer*  
 
 ---
 
@@ -47,6 +47,6 @@ Instructions for cloning and running the project will be added once the code is 
 
 ## **License**
 
-This project is released under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is released under the MIT License. See the [LICENSE](LICENSE) file for details...
 
 ---" > README.md
