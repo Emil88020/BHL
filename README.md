@@ -1,4 +1,4 @@
-echo "# **Hackathon Project - BEST Hacking League 2024**
+### **Hackathon Project - BEST Hacking League 2024**
 
 ## PISCINE EAGLES TEAM
 
