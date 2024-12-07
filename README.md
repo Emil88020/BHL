@@ -47,6 +47,6 @@ Instructions for cloning and running the project will be added once the code is 
 
 ## **License**
 
-This project is released under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is released under the MIT License. See the [LICENSE](LICENSE) file for details...
 
 ---" > README.md
