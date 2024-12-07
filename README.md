@@ -27,7 +27,7 @@ The BEST Hacking League is an annual hackathon organized to foster innovation an
 
 ## **Team Members**
 
-- **[Kacper Konarzewski]**: *Leadear, Backend Developer and motivator*  
+- **Kacper Konarzewski**: *Leadear, Backend Developer and motivator*  
 - **[Dominika Szafran]**: *Project Manager, Backend Developer*  
 - **[AKbarali Nabiev]**: *Frontend Developer, UI/UX Designer*  
 
