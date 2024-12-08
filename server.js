@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const OpenAI = require("openai");
@@ -7,8 +8,7 @@ const multer = require("multer");
 const cors = require("cors");
 
 const openai = new OpenAI({
-	apiKey: "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"
-
+	apiKey: process.env.OPENAI_API_KEY
 });
 const app = express();
 
