@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const ChatBox = () => {
 	const audioPlayer = useRef(null);
 	const audioSource = useRef(null);
-
+	const mediaRecorderRef = useRef(null);
   const [messages, setMessages] = useState([
     { sender: "bot", text: "Hello! How can I assist you today?" },
   ]);
@@ -30,29 +30,48 @@ const ChatBox = () => {
   };
 
   // Function to handle speech recognition
-  const startRecording = () => {
-    if (isRecording) return;
 
-    // Initialize SpeechRecognition API for capturing audio
-    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.lang = "en-US"; // Adjust to desired language
-    recognition.start();
+	const startRecording = async () => {
+		if (isRecording) {
+			mediaRecorderRef.current.stop();
+		} else {
+			const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+			const recorder = new MediaRecorder(stream);
 
-    recognition.onstart = () => {
-      setIsRecording(true);
-    };
+			mediaRecorderRef.current = recorder;
+			let audioChunks = [];
+			recorder.ondataavailable = (event) => {
+				audioChunks.push(event.data);
+			};
 
-    recognition.onresult = (event) => {
-      const speechText = event.results[0][0].transcript;
-      setInputValue(speechText);
-      handleSend();
-      setIsRecording(false);
-    };
+			recorder.onstop = async () => {
+				const audioBlob = new Blob(audioChunks, { type: "audio/mp3" });
+				const formData = new FormData();
+				formData.append("audio", audioBlob, "AsSpeech.mp3");
+				const response = await fetch("http://localhost:5000/voice", {
+					method: "POST",
+					body: formData,
+				});
+				const data = await response.json();
+				const newMessages = [...messages, { sender: "user", text: "[VOICE MESSAGE]" }];
+				setMessages([...newMessages, { sender: "bot", text: data.response }]);
+				const uniqueAudioUrl = `http://localhost:5000${data.audioUrl}?timestamp=${new Date().getTime()}`;
 
-    recognition.onerror = (error) => {
-      console.error("Speech recognition error:", error);
-      setIsRecording(false);
-    };
+				const audio = new Audio(uniqueAudioUrl);
+				audio.load();
+				audio.play()
+					  .then(() => {
+						console.log('Audio started playing!');
+					  })
+					  .catch((error) => {
+						   console.error('Error playing audio:', error);
+					  });
+		};
+
+		recorder.start();
+		}
+		setIsRecording(!isRecording);
+
   };
 
   const getGptResponse = async (userMessage) => {
@@ -124,7 +143,6 @@ const ChatBox = () => {
           type="button"
           className="mic-button"
           onClick={startRecording}
-          disabled={isRecording}
         >
           <svg
             width="24"
