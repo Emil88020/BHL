@@ -99,7 +99,7 @@ app.post("/voice", upload.single("audio"), async (req, res) => {
 	}
 	let message = await getTranscription();
 	let	response = await getResponse(message);
-	res.json({ response, audioUrl: path.join(__dirname, 'public', "AISpeech.mp3") });
+	res.json({ response, audioUrl: "/AISpeech.mp3" });
   });
 
 app.listen(PORT, () => {

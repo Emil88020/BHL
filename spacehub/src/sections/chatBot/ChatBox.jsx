@@ -53,9 +53,9 @@ const ChatBox = () => {
 					body: formData,
 				});
 				const data = await response.json();
+				const uniqueAudioUrl = `http://localhost:5000${data.audioUrl}?timestamp=${new Date().getTime()}`;
 				const newMessages = [...messages, { sender: "user", text: "[VOICE MESSAGE]" }];
 				setMessages([...newMessages, { sender: "bot", text: data.response }]);
-				const uniqueAudioUrl = `http://localhost:5000${data.audioUrl}?timestamp=${new Date().getTime()}`;
 
 				const audio = new Audio(uniqueAudioUrl);
 				audio.load();
