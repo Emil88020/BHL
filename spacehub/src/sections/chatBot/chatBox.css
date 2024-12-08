@@ -1,0 +1,166 @@
+/* Chat container */
+.chat-container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-image: url("../../assets/images/stars.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #ffffff;
+  font-family: "Arial", sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+
+.chat-messages {
+  flex: 1;
+  width: 45%;
+  overflow-y: auto;
+  padding: 15px;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  border: 0.5px solid rgba(255, 255, 255, 0.25);
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+ 
+}
+
+.message {
+  margin: 10px 0;
+  padding: 12px 18px;
+  max-width: 75%;
+  border-radius: 12px;
+  font-size: 15px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.message.user {
+  background-color: #4caf50;
+  color: white;
+  align-self: flex-end;
+  text-align: right;
+  max-width: 80%;
+  border-radius: 20px 20px 0 20px; /* Rounded corners for user */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+}
+
+/* Bot message styles */
+.message.bot {
+  background-color: #333333; /* Dark grey for bot */
+  color: white;
+  align-self: flex-start;
+  text-align: left;
+  max-width: 80%;
+  border-radius: 20px 20px 20px 0; /* Rounded corners for bot */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Chat input area */
+.chat-input {
+  width: 45%;
+  display: flex;
+  gap: 15px;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  border: 0.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 25px;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 12px 18px;
+  font-size: 16px;
+  color: white;
+  background-color: #333333;
+  border: none;
+  border-radius: 16px;
+  outline: none;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+/* Input field focus effect */
+.chat-input input:focus {
+  background-color: #444444; /* Slightly lighter grey when focused */
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Send button */
+.chat-input button {
+  padding: 12px 25px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.chat-input button:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+.chat-input button:active {
+  transform: translateY(0);
+}
+
+.back-button {
+  align-items: center;
+  left: 3%;
+  position: absolute;
+  display: flex;
+  color: #fff;
+  font-size: 18px;
+  width: 130px;
+  height: 48px;
+  font-family: var(--gilroy-bold);
+  justify-content: center;
+  overflow: hidden;
+  outline: hidden;
+  border: 0.5px solid #b9b9b9;
+  background-color: transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out; /* Smooth transition */
+}
+
+/* Hover state */
+.back-button:hover {
+  background-color: #ffffff; /* Green background on hover */
+  border-color: #ffffff; /* Matching border color */
+  transform: scale(1.1); /* Slightly increase the size of the button */
+}
+
+/* Active (pressed) state */
+.back-button:active {
+  transform: scale(1); /* Reset the size when the button is pressed */
+  background-color: #ffffff; /* Slightly darker green when pressed */
+}
+
+/* Optional: Adding a subtle box shadow for better visual effect */
+.back-button:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #555; /* Dark grey */
+  border-radius: 10px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background: #777; /* Lighter grey on hover */
+}

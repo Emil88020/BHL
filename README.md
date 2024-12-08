@@ -50,3 +50,11 @@ Instructions for cloning and running the project will be added once the code is 
 This project is released under the MIT License. See the [LICENSE](LICENSE) file for details...
 
 ---" > README.md
+
+
+"scripts": {
+  "start": "craco start",
+  "build": "craco build",
+  "test": "craco test",
+  "eject": "react-scripts eject"
+}

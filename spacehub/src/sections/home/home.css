@@ -1,0 +1,89 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../../assets/images/stars.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 0 3% 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.chat-with-ai {
+  align-items: center;
+  left: 46%;
+  z-index: 999;
+  top: 70%;
+  position: absolute;
+  display: block;
+  color: #fff;
+  font-size: 18px;
+  width: 160px;
+  height: 56px;
+  font-family: var(--gilroy-bold);
+  justify-content: center;
+  overflow: hidden;
+  outline: hidden;
+  border: 0.5px solid #b9b9b9;
+  background-color: transparent;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+}
+
+span{
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-radius: 50px;
+  background-color: #ffffff;
+  -webkit-transition: width 0.3s ease-in, height 0.3s ease-in;
+  transition: width 0.3s ease-in, height 0.3s ease-in;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
+  -moz-transition: width 0.3s ease-in, height 0.3s ease-in;
+  -ms-transition: width 0.3s ease-in, height 0.3s ease-in;
+  -o-transition: width 0.3s ease-in, height 0.3s ease-in;
+}
+
+.chat-with-ai:hover {
+  color: #000;
+  font-family: var(--gilroy-bold);
+}
+
+.chat-with-ai:hover span {
+  width: 225%;
+  height: 562.5px;
+}
+
+.chat-with-ai:active {
+  background-color: #fff;
+  color: #000;
+}
+
+.bottom-layer {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  height: 70px;
+  width: 120%;
+}
+
