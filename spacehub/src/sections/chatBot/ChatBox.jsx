@@ -54,9 +54,6 @@ const ChatBox = () => {
 				});
 				const data = await response.json();
 				const uniqueAudioUrl = `http://localhost:5000${data.audioUrl}?timestamp=${new Date().getTime()}`;
-				const newMessages = [...messages, { sender: "user", text: "[VOICE MESSAGE]" }];
-				setMessages([...newMessages, { sender: "bot", text: data.response }]);
-
 				const audio = new Audio(uniqueAudioUrl);
 				audio.load();
 				audio.play()
@@ -66,6 +63,8 @@ const ChatBox = () => {
 					  .catch((error) => {
 						   console.error('Error playing audio:', error);
 					  });
+				const newMessages = [...messages, { sender: "user", text: "[VOICE MESSAGE]" }];
+				setMessages([...newMessages, { sender: "bot", text: data.response }]);
 		};
 
 		recorder.start();
