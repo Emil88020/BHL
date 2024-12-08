@@ -34,7 +34,7 @@
 
 .message {
   margin: 10px 0;
-  padding: 12px 18px;
+  padding: 8px 18px;
   max-width: 75%;
   border-radius: 12px;
   font-size: 15px;
@@ -85,17 +85,14 @@
   border: none;
   border-radius: 16px;
   outline: none;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
   transition: all 0.3s ease;
 }
 
-/* Input field focus effect */
 .chat-input input:focus {
-  background-color: #444444; /* Slightly lighter grey when focused */
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
+  background-color: #3b3b3b;
+  /* box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5); */
 }
 
-/* Send button */
 .chat-input button {
   padding: 12px 25px;
   font-size: 16px;
@@ -105,7 +102,6 @@
   border-radius: 25px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .chat-input button:hover {
@@ -134,33 +130,52 @@
   background-color: transparent;
   border-radius: 10px;
   cursor: pointer;
-  transition: 0.3s ease-in-out; /* Smooth transition */
+  transition: 0.3s ease-in-out;
 }
 
-/* Hover state */
 .back-button:hover {
-  background-color: #ffffff; /* Green background on hover */
-  border-color: #ffffff; /* Matching border color */
-  transform: scale(1.1); /* Slightly increase the size of the button */
+  color: #333333;
+  background-color: #ffffff;
+  border-color: #ffffff;
+  transform: scale(1.1);
 }
 
-/* Active (pressed) state */
 .back-button:active {
-  transform: scale(1); /* Reset the size when the button is pressed */
-  background-color: #ffffff; /* Slightly darker green when pressed */
+  transform: scale(1);
+  background-color: #ffffff;
 }
 
-/* Optional: Adding a subtle box shadow for better visual effect */
 .back-button:hover {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 
 .chat-messages::-webkit-scrollbar-thumb {
-  background: #555; /* Dark grey */
+  background: #555;
   border-radius: 10px;
 }
 
 .chat-messages::-webkit-scrollbar-thumb:hover {
-  background: #777; /* Lighter grey on hover */
+  background: #777;
+}
+
+.mic-button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.mic-button:hover {
+  transform: scale(1.2);
+}
+
+.mic-button:active {
+  opacity: 0.7;
+}
+
+.mic-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
