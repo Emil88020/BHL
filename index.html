@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+    }
+    .chatbox {
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+      height: 400px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+    .input-area {
+      display: flex;
+      gap: 10px;
+    }
+    input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Chatbot</h1>
+  <div class="chatbox" id="chatbox">
+    <!-- Messages will appear here -->
+  </div>
+  <div class="input-area">
+    <input type="text" id="messageInput" placeholder="Type your message here...">
+    <button id="sendBtn">Send</button>
+  </div>
+
+  <div>
+    <button id="recordBtn">Record</button>
+  </div>
+  <!-- Audio element to play the speech file -->
+  <audio id="audioPlayer" hidden>
+    <source id="audioSource" type="audio/mpeg">
+  </audio>
+
+  <script>
+	const chatbox = document.getElementById("chatbox");
+	const messageInput = document.getElementById("messageInput");
+	const sendBtn = document.getElementById("sendBtn");
+	const recordBtn = document.getElementById("recordBtn");
+	const audioPlayer = document.getElementById("audioPlayer");
+	const audioSource = document.getElementById("audioSource");
+  
+	let mediaRecorder;
+    let audioChunks = [];
+    let isRecording = false;
+	// Function to add a message to the chatbox
+	function addMessage(sender, message) {
+	  const messageElement = document.createElement("div");
+	  messageElement.textContent = `${sender}: ${message}`;
+	  chatbox.appendChild(messageElement);
+	  chatbox.scrollTop = chatbox.scrollHeight; // Scroll to the bottom
+	}
+  
+	// Handle button click
+	sendBtn.addEventListener("click", async () => {
+	  const userMessage = messageInput.value.trim();
+	  if (!userMessage) return;
+	  messageInput.value = "";
+	  messageInput.disabled = true;
+	  sendBtn.disabled = true;
+	  // Display user's message
+	  addMessage("You", userMessage);
+	  	 
+	  // Send message to the server
+	  const response = await fetch("/chat", {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({ message: userMessage }),
+	  });
+	  
+	  // Get the server's response
+	  const data = await response.json();
+	  addMessage("Chatbot", data.response);
+  
+	  // Set the audio file source and play it
+	  const uniqueAudioUrl = `${data.audioUrl}?timestamp=${new Date().getTime()}`;
+
+	audioSource.src = uniqueAudioUrl;
+
+	audioPlayer.load();
+	audioPlayer.play();
+	messageInput.disabled = false;
+	sendBtn.disabled = false;
+	});
+
+	recordBtn.addEventListener("click", async () => {
+      if (isRecording) {
+        mediaRecorder.stop();
+        recordBtn.textContent = "Record";
+      } else {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+
+		audioChunks = [];
+        mediaRecorder.ondataavailable = (event) => {
+          audioChunks.push(event.data);
+        };
+
+        mediaRecorder.onstop = async () => {
+          	const audioBlob = new Blob(audioChunks, { type: "audio/mp3" });
+		  	const formData = new FormData();
+          	formData.append("audio", audioBlob, "AsSpeech.mp3");
+		  	const response = await fetch("/voice", {
+            	method: "POST",
+            	body: formData,
+         	});
+		  	const data = await response.json();
+	 		addMessage("Chatbot", data.response);
+
+			const uniqueAudioUrl = `${data.audioUrl}?timestamp=${new Date().getTime()}`;
+
+			audioSource.src = uniqueAudioUrl;
+
+			audioPlayer.load();
+			audioPlayer.play();
+  
+        };
+
+        mediaRecorder.start();
+        recordBtn.textContent = "Stop Recording";
+      }
+
+      // Toggle recording state
+      isRecording = !isRecording;
+    });
+
+	// Send message on Enter key press
+	messageInput.addEventListener("keypress", (e) => {
+	  if (e.key === "Enter") {
+		sendBtn.click();
+	  }
+	});
+  </script>
+</body>
+</html>

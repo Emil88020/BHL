@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./chatBox.css";
 import { Link } from "react-router-dom";
 
 // Make sure your chat box also handles SpeechRecognition
 const ChatBox = () => {
+	const audioPlayer = useRef(null);
+	const audioSource = useRef(null);
+
   const [messages, setMessages] = useState([
     { sender: "bot", text: "Hello! How can I assist you today?" },
   ]);
@@ -52,22 +55,35 @@ const ChatBox = () => {
     };
   };
 
-  // Get GPT response (simulating here for now)
-  const getGptResponse = async (message) => {
+  const getGptResponse = async (userMessage) => {
     try {
-      const response = await fetch("http://localhost:5000/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message }),
-      });
+		console.log(userMessage);
+		const response = await fetch("http://localhost:5000/chat", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ message: userMessage }),
+		});
 
       const data = await response.json();
-      return data.response || "No response from GPT.";
+	  console.log(`${data.audioUrl}?timestamp=${new Date().getTime()}`)
+	  const uniqueAudioUrl = `http://localhost:5000${data.audioUrl}?timestamp=${new Date().getTime()}`;
+
+		const audio = new Audio(uniqueAudioUrl);
+		audio.load();
+		audio.play()
+      		.then(() => {
+        		console.log('Audio started playing!');
+      		})
+      		.catch((error) => {
+       			console.error('Error playing audio:', error);
+      });
+      return data.response || "No response from AstroMind.";
     } catch (error) {
-      console.error("Error fetching GPT response:", error);
-      return "Error fetching GPT response.";
+      console.error("Error fetching AstroMind response:", error);
+      return "Error fetching AstroMind response.";
     }
   };
+
 
   return (
     <div className="chat-container">
@@ -79,14 +95,20 @@ const ChatBox = () => {
       {/* Chat messages area */}
       <div className="chat-messages">
         {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`message ${msg.sender === "user" ? "user" : "bot"}`}
-          >
+          <div key={index} className={`message ${msg.sender === "user" ? "user" : "bot"}`}>
             {msg.text}
           </div>
         ))}
       </div>
+
+      {/* Audio Player (hidden, for playing audio responses) */}
+      <div>
+        <audio ref={audioPlayer} hidden>
+          <source ref={audioSource} type="audio/mpeg"></source>
+        </audio>
+      </div>
+
+      {/* Chat input area */}
       <div className="chat-input">
         <input
           type="text"
