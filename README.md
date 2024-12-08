@@ -45,10 +45,3 @@ Open terminal in the root folder and run “node server.js”, then open spacehu
 
 ---" > README.md
 
-
-"scripts": {
-  "start": "craco start",
-  "build": "craco build",
-  "test": "craco test",
-  "eject": "react-scripts eject"
-}
